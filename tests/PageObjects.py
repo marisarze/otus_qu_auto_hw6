@@ -1,4 +1,5 @@
 import time
+import selenium
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
@@ -21,20 +22,21 @@ class BasePage:
         element.send_keys(value)
 
     def element_in_element(self, parent_locator, child_locator: tuple):
-        #if isinstance(parent_locator, 
-        return self.element(parent_locator).find_element(*child_locator)
-
+        if isinstance(parent_locator, tuple):
+            return self.element(parent_locator).find_element(*child_locator)
+        return parent_locator.find_element(*child_locator)
+        
     def element(self, locator: tuple):
         try:
             return WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located(locator))
         except TimeoutException:
-            raise AssertionError(f"Не дождался видимости элемента {locator}")
+            raise AssertionError(f"Didn't wait element visibility: {locator}")
 
     def elements(self, locator: tuple):
         try:
             return WebDriverWait(self.driver, 5).until(EC.visibility_of_all_elements_located(locator))
         except TimeoutException:
-            raise AssertionError(f"Не дождался видимости элементов {locator}")
+            raise AssertionError(f"Didn't wait elements visibility: {locator}")
 
     def verify_product_item(self, product_name):
         return self.element((By.LINK_TEXT, product_name))
@@ -148,6 +150,7 @@ class ComparisonPage(BasePage):
 
 
 class MainPage(BasePage):
+    HOME_BUTTON = (By.CSS_SELECTOR, '#logo > a')
     IPHONE = (By.LINK_TEXT, "iPhone")
     EMPTY_CART_INFO = (By.XPATH, "//div[contains(text(), 'Your shopping cart is empty!')]")
     CART = (By.CSS_SELECTOR, '#cart > button')
@@ -156,7 +159,7 @@ class MainPage(BasePage):
     FEATURED_PRODUCT = (By.CSS_SELECTOR, "#content > div.row .product-layout")
     PRODUCT_NAME = (By.CSS_SELECTOR, ".caption h4 a")
     PRODUCT_IMAGE = (By.CSS_SELECTOR, ".product-layeout > div.product-thumb > div.image")
-    WISH_BUTTON = (By.CSS_SELECTOR, "button['data-original-title'='Add to Wish List']")
+    WISH_BUTTON = (By.CSS_SELECTOR, "button[data-original-title='Add to Wish List']")
     NAVBAR = (By.CSS_SELECTOR, "ul.nav.navbar-nav")
     DESKTOPS = (By.LINK_TEXT, "Desktops")
     ALL_DESKTOPS = (By.LINK_TEXT, "Show All Desktops")
@@ -173,7 +176,7 @@ class MainPage(BasePage):
     CAMERAS = (By.LINK_TEXT, "Cameras")
     MP3_PLAYERS = (By.LINK_TEXT, "MP3 Players")
 
-    SLIDE_ACTIVE_ELEMENT = (By.CSS_SELECTOR, "div.swiper-wrapper > div.swiper-slide-duplicate-active")
+    SLIDE_ACTIVE_ELEMENT = (By.CSS_SELECTOR, "div.swiper-slide-active")
 
 
     def slide_image_next(self):
@@ -189,7 +192,8 @@ class MainPage(BasePage):
         self.click(feature_product)
 
     def wish_featured_product(self, index):
-        wish_button = self.elements(self.FEATURED_PRODUCT)[index].find_element(*self.WISH_BUTTON)
+        product = self.elements(self.FEATURED_PRODUCT)[index]
+        wish_button = product.find_element(*self.WISH_BUTTON)
         self.click(wish_button)
 
     def click_login(self):

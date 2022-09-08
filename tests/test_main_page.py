@@ -10,7 +10,8 @@ from selenium.webdriver.common.by import By
 
 def test_home_button(driver, url):
     driver.get(url=url)
-    home_button = MainPage(driver).element(By.CSS_SELECTOR, '#logo > a')
+    home_button = MainPage(driver).element(MainPage.HOME_BUTTON)
+    print(type(home_button))
     assert home_button.get_attribute('href') == url+'/index.php?route=common/home'
 
 
@@ -23,7 +24,7 @@ def test_navbar_elements(driver, url):
     laptops_button = MainPage(driver).element_in_element(navbar, MainPage.LAPTOPS)
     assert laptops_button.get_attribute("href")==url+"/laptop-notebook"
 
-    components_button = MainPage(driver).element_in_element(navbar, MainPage.COMPONENT)
+    components_button = MainPage(driver).element_in_element(navbar, MainPage.COMPONENTS)
     assert components_button.get_attribute("href")==url+"/component"
 
     tablets_button = MainPage(driver).element_in_element(navbar, MainPage.TABLETS)
@@ -39,7 +40,7 @@ def test_navbar_elements(driver, url):
     assert cameras_button.get_attribute("href")==url+"/camera"
 
     cameras_button = MainPage(driver).element_in_element(navbar, MainPage.MP3_PLAYERS)
-    assert cameras_button.get_attribute("href")==url+"/mp3-player"
+    assert cameras_button.get_attribute("href")==url+"/mp3-players"
 
 
 def test_slide_button(driver, url):
@@ -58,8 +59,7 @@ def test_featured_elements(driver, url):
     featured_elements = MainPage(driver).elements(MainPage.FEATURED_PRODUCT)
     choice_index = random.randint(0,len(featured_elements)-1)
     MainPage(driver).wish_featured_product(choice_index)
-    MainPage(driver).element()
-    AlertElement(driver).wish()
+    alert = AlertElement(driver).wish()
     MainPage(driver).wait(EC.element_to_be_clickable, MainPage.PRODUCT_IMAGE)
 
 
@@ -71,8 +71,10 @@ def test_basket(driver, url):
 
 
 from selenium import webdriver
-driver = webdriver.Chrome(executable_path=driver_folder+'/chromedriver'+extension, options=options)
+driver = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
 url = r"http://192.168.0.102:8081"
-test_home_button(driver, url)
-
+#test_home_button(driver, url)
+#test_navbar_elements(driver, url)
+#test_slide_button(driver, url)
+test_featured_elements(driver, url)
 
