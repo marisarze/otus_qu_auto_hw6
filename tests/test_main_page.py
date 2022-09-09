@@ -1,11 +1,7 @@
-from re import M
-import pytest
 import time
+import selenium
 import random
-from conftest import driver, url
-from PageObjects import MainPage, AlertElement
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
+from PageObjects.MainPage import MainPage
 
 
 def test_home_button(driver, url):
@@ -45,10 +41,11 @@ def test_navbar_elements(driver, url):
 
 def test_slide_button(driver, url):
     driver.get(url=url)
+    time.sleep(1)
     old_element_id = MainPage(driver).element(MainPage.SLIDE_ACTIVE_ELEMENT)\
         .get_attribute("data-swiper-slide-index")
     MainPage(driver).slide_image_next()
-    time.sleep(2)
+    
     new_element_id = MainPage(driver).element(MainPage.SLIDE_ACTIVE_ELEMENT)\
         .get_attribute("data-swiper-slide-index")
     assert old_element_id!=new_element_id
@@ -59,22 +56,39 @@ def test_featured_elements(driver, url):
     featured_elements = MainPage(driver).elements(MainPage.FEATURED_PRODUCT)
     choice_index = random.randint(0,len(featured_elements)-1)
     MainPage(driver).wish_featured_product(choice_index)
-    alert = AlertElement(driver).wish()
-    MainPage(driver).wait(EC.element_to_be_clickable, MainPage.PRODUCT_IMAGE)
+    alert = MainPage(driver).element(MainPage.PLEASE_LOGIN)
+    assert "You must login or" in alert.text 
 
 
 def test_basket(driver, url):
     driver.get(url=url)
     basket_button = MainPage(driver).element(MainPage.CART)
     MainPage(driver).click(basket_button)
-    assert "open" in basket_button.get_attribute('class')
+    classes = basket_button.get_attribute('class')
+    assert basket_button.get_attribute('aria-expanded')
 
 
-from selenium import webdriver
-driver = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-url = r"http://192.168.0.102:8081"
-#test_home_button(driver, url)
-#test_navbar_elements(driver, url)
-#test_slide_button(driver, url)
-test_featured_elements(driver, url)
+# from selenium import webdriver
+# driver1 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
+# url1 = r"http://192.168.0.102:8081"
+# test_home_button(driver1, url1)
 
+# from selenium import webdriver
+# driver2 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
+# url2 = r"http://192.168.0.102:8081"
+# test_navbar_elements(driver2, url2)
+
+# from selenium import webdriver
+# driver3 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
+# url3 = r"http://192.168.0.102:8081"
+# test_slide_button(driver3, url3)
+
+# from selenium import webdriver
+# driver4 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
+# url4 = r"http://192.168.0.102:8081"
+# test_featured_elements(driver4, url4)
+
+# from selenium import webdriver
+# driver5 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
+# url5 = r"http://192.168.0.102:8081"
+# test_basket(driver5,url5)

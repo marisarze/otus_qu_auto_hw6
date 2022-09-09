@@ -1,7 +1,7 @@
-import pytest
-from conftest import driver, url
-from exception_wrappers import *
-from PageObjects import *
+import time
+import selenium
+from PageObjects.MainPage import MainPage
+from PageObjects.LoginPage import LoginPage
 
 
 def test_login_button_in_main_page(driver, url):
@@ -19,5 +19,32 @@ def test_login_page(driver, url):
     assert right_part_head.text == 'Returning Customer'
 
     LoginPage(driver).login(email="arichbird@mail.com", password="quackquack")
-    alert = LoginPage.element(AlertElement.UNSUCCESS_LOGIN)
+    alert = LoginPage(driver).element(LoginPage.UNSUCCESS_LOGIN)
     assert alert.text == 'Warning: No match for E-Mail Address and/or Password.'
+
+
+
+# from selenium import webdriver
+# driver1 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
+# url1 = r"http://192.168.0.102:8081"
+# test_login_button_in_main_page(driver1, url1)
+
+# from selenium import webdriver
+# driver2 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
+# url2 = r"http://192.168.0.102:8081"
+# test_login_page(driver2, url2)
+
+# from selenium import webdriver
+# driver3 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
+# url3 = r"http://192.168.0.102:8081"
+# test_related_products(driver3, url3)
+
+# from selenium import webdriver
+# driver4 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
+# url4 = r"http://192.168.0.102:8081"
+# test_related_products(driver4, url4)
+
+# from selenium import webdriver
+# driver5 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
+# url5 = r"http://192.168.0.102:8081"
+# test_basket(driver5,url5)

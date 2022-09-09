@@ -1,16 +1,15 @@
-import pytest
 import time
-from conftest import driver, url
-from exception_wrappers import *
-
-from PageObjects import *
+import selenium
+from PageObjects.MainPage import MainPage
+from PageObjects.CatalogPage import CatalogPage
 
 
 def test_desktop_button(driver, url):
 
     driver.get(url=url)
     desktop_dropdown = MainPage(driver).element_in_element(MainPage.NAVBAR, MainPage.DESKTOPS)
-    all_desktops = MainPage(driver).element_in_element(desktop_dropdown, MainPage.ALL_DESKTOPS)
+    MainPage(driver).click(desktop_dropdown)
+    all_desktops = MainPage(driver).element(MainPage.ALL_DESKTOPS)
     MainPage(driver).click(all_desktops)
     refine_search = CatalogPage(driver).element(CatalogPage.REFINE_SEARCH_DIV)
     assert refine_search.text == 'Refine Search'
@@ -23,9 +22,37 @@ def test_sorting_and_total(driver, url):
     products = CatalogPage(driver).elements(CatalogPage.PRODUCT)
     assert len(products)>0
     price_sum = 0
-    price_sum += CatalogPage.get_product_price(products[0])
+    price_sum += CatalogPage(driver).get_product_price(products[0])
     CatalogPage(driver).add_to_cart(products[0])
-    price_sum += CatalogPage.get_product_price(products[1])
+    time.sleep(10)
+    price_sum += CatalogPage(driver).get_product_price(products[1])
     CatalogPage(driver).add_to_cart(products[1])
+    time.sleep(10)
     total_price = CatalogPage(driver).get_total()
     assert price_sum == total_price
+
+
+# from selenium import webdriver
+# driver1 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
+# url1 = r"http://192.168.0.102:8081"
+# test_desktop_button(driver1, url1)
+
+# from selenium import webdriver
+# driver2 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
+# url2 = r"http://192.168.0.102:8081"
+# test_sorting_and_total(driver2, url2)
+
+# from selenium import webdriver
+# driver3 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
+# url3 = r"http://192.168.0.102:8081"
+# test_slide_button(driver3, url3)
+
+# from selenium import webdriver
+# driver4 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
+# url4 = r"http://192.168.0.102:8081"
+# test_featured_elements(driver4, url4)
+
+# from selenium import webdriver
+# driver5 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
+# url5 = r"http://192.168.0.102:8081"
+# test_basket(driver5,url5)
