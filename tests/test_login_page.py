@@ -20,7 +20,8 @@ def test_login_page(driver, url):
 
     LoginPage(driver).login(email="arichbird@mail.com", password="quackquack")
     alert = LoginPage(driver).element(LoginPage.UNSUCCESS_LOGIN)
-    assert alert.text == 'Warning: No match for E-Mail Address and/or Password.'
+    assert alert.text == 'Warning: No match for E-Mail Address and/or Password.' \
+        or alert.text == 'Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour.'
 
 
 
