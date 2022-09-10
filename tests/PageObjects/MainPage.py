@@ -69,3 +69,5 @@ class MainPage(BasePage):
     def click_register(self):
         self.click(self.element(self.MY_ACCOUNT))
         self.click(self.element(self.REGISTER))
+
+    

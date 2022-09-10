@@ -1,5 +1,6 @@
 import pytest
 import json
+import time
 from conftest import driver, url
 from selenium.webdriver.common.by import By
 from PageObjects.AdminPage import AdminPage
@@ -52,7 +53,6 @@ def test_add_new_customer(driver, url):
     with open(secret_path, 'r') as file:
         secret = json.load(file)
     AdminPage(driver).login(secret['user'], secret['password'])
-    AdminPage(driver).open_customers()
     AdminPage(driver).add_new_customer(
         first_name="Donald",
         last_name="Duck",
@@ -60,6 +60,7 @@ def test_add_new_customer(driver, url):
         phone="123",
         password="quackquack"
     )
+    time.sleep(1)
     old_customers = AdminPage(driver).elements(AdminPage.CUSTOMER_ROW)
     AdminPage(driver).add_new_customer(
         first_name="Scrooge",
@@ -70,7 +71,5 @@ def test_add_new_customer(driver, url):
     )
     new_customers = AdminPage(driver).elements(AdminPage.CUSTOMER_ROW)
     assert len(new_customers) == len(old_customers)+1
-    AdminPage(driver).delete_customer(new_customers[0])
-    new_customers = AdminPage(driver).elements(AdminPage.CUSTOMER_ROW)
-    AdminPage(driver).delete_customer(new_customers[0])
-    
+    AdminPage(driver).delete_all_customers()
+

@@ -105,3 +105,14 @@ class AdminPage(BasePage):
         delete_button = self.element(self.DELETE_BUTTON)
         self.click(delete_button)
         self.accept_alert()
+
+    def delete_all_customers(self):
+        self.open_customers()
+        try:
+            customers = self.elements(AdminPage.CUSTOMER_ROW)
+        except:
+            raise Exception("Can't find any customers")
+
+        for i in range(len(customers)):
+            customers = self.elements(AdminPage.CUSTOMER_ROW)
+            self.delete_customer(customers[0])
