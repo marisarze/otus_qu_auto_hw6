@@ -31,28 +31,3 @@ def test_sorting_and_total(driver, url):
     total_price = CatalogPage(driver).get_total()
     assert price_sum == total_price
 
-
-# from selenium import webdriver
-# driver1 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-# url1 = r"http://192.168.0.102:8081"
-# test_desktop_button(driver1, url1)
-
-# from selenium import webdriver
-# driver2 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-# url2 = r"http://192.168.0.102:8081"
-# test_sorting_and_total(driver2, url2)
-
-# from selenium import webdriver
-# driver3 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-# url3 = r"http://192.168.0.102:8081"
-# test_slide_button(driver3, url3)
-
-# from selenium import webdriver
-# driver4 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-# url4 = r"http://192.168.0.102:8081"
-# test_featured_elements(driver4, url4)
-
-# from selenium import webdriver
-# driver5 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-# url5 = r"http://192.168.0.102:8081"
-# test_basket(driver5,url5)

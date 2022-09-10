@@ -68,27 +68,29 @@ def test_basket(driver, url):
     assert basket_button.get_attribute('aria-expanded')
 
 
-# from selenium import webdriver
-# driver1 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-# url1 = r"http://192.168.0.102:8081"
-# test_home_button(driver1, url1)
+def test_currency_switch(driver, url):
+    driver.get(url=url)
+    switcher = MainPage(driver).element(MainPage.CURRENCY_SWITCHER)
+    MainPage(driver).click(switcher)
+    euro_button = MainPage(driver).element(MainPage.CURRENCY_EURO)
+    MainPage(driver).click(euro_button)
+    cart_button = MainPage(driver).element(MainPage.CART)
+    assert "€" in MainPage(driver).element(MainPage.CURRENCY_INDICATOR).text
+    assert "€" in cart_button.text
 
-# from selenium import webdriver
-# driver2 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-# url2 = r"http://192.168.0.102:8081"
-# test_navbar_elements(driver2, url2)
+    switcher = MainPage(driver).element(MainPage.CURRENCY_SWITCHER)
+    MainPage(driver).click(switcher)
+    pound_button = MainPage(driver).element(MainPage.CURRENCY_POUND)
+    MainPage(driver).click(pound_button)
+    cart_button = MainPage(driver).element(MainPage.CART)
+    assert "£" in MainPage(driver).element(MainPage.CURRENCY_INDICATOR).text
+    assert "£" in cart_button.text
 
-# from selenium import webdriver
-# driver3 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-# url3 = r"http://192.168.0.102:8081"
-# test_slide_button(driver3, url3)
+    switcher = MainPage(driver).element(MainPage.CURRENCY_SWITCHER)
+    MainPage(driver).click(switcher)
+    dollar_button = MainPage(driver).element(MainPage.CURRENCY_DOLLAR)
+    MainPage(driver).click(dollar_button)
+    cart_button = MainPage(driver).element(MainPage.CART)
+    assert "$" in MainPage(driver).element(MainPage.CURRENCY_INDICATOR).text
+    assert "$" in cart_button.text
 
-# from selenium import webdriver
-# driver4 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-# url4 = r"http://192.168.0.102:8081"
-# test_featured_elements(driver4, url4)
-
-# from selenium import webdriver
-# driver5 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-# url5 = r"http://192.168.0.102:8081"
-# test_basket(driver5,url5)

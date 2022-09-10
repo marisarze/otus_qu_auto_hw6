@@ -23,29 +23,3 @@ def test_login_page(driver, url):
     assert alert.text == 'Warning: No match for E-Mail Address and/or Password.' \
         or alert.text == 'Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour.'
 
-
-
-# from selenium import webdriver
-# driver1 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-# url1 = r"http://192.168.0.102:8081"
-# test_login_button_in_main_page(driver1, url1)
-
-# from selenium import webdriver
-# driver2 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-# url2 = r"http://192.168.0.102:8081"
-# test_login_page(driver2, url2)
-
-# from selenium import webdriver
-# driver3 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-# url3 = r"http://192.168.0.102:8081"
-# test_related_products(driver3, url3)
-
-# from selenium import webdriver
-# driver4 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-# url4 = r"http://192.168.0.102:8081"
-# test_related_products(driver4, url4)
-
-# from selenium import webdriver
-# driver5 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-# url5 = r"http://192.168.0.102:8081"
-# test_basket(driver5,url5)

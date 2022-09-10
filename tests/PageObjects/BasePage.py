@@ -56,3 +56,14 @@ class BasePage:
             return WebDriverWait(self.driver, self.timeout).until_not(method(*args))
         except TimeoutException:
             raise AssertionError(f"Didn't wait: {method.__name__} done")
+
+    def accept_alert(self):
+        alert = self.wait(EC.alert_is_present)
+        #alert = self.driver.switch_to.alert
+        alert.accept()
+
+    
+    def decline_alert(self):
+        alert = self.wait(EC.alert_is_present)
+        #alert = self.driver.switch_to.alert
+        alert.dismiss()

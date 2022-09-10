@@ -39,29 +39,3 @@ def test_related_products(driver, url):
     assert product_image.get_attribute('src').endswith('.jpg')
 
 
-# from selenium import webdriver
-# driver1 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-# url1 = r"http://192.168.0.102:8081"
-# test_product_button_in_main(driver1, url1)
-
-# from selenium import webdriver
-# driver2 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-# url2 = r"http://192.168.0.102:8081"
-# test_add_to_cart(driver2, url2)
-
-# from selenium import webdriver
-# driver4 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-# url4 = r"http://192.168.0.102:8081"
-# test_wish_list(driver4, url4)
-
-# from selenium import webdriver
-# driver3 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-# url3 = r"http://192.168.0.102:8081"
-# test_related_products(driver3, url3)
-
-
-
-# from selenium import webdriver
-# driver5 = webdriver.Chrome(executable_path=r'C:\Users\marisarze\Downloads\browsers\chromedriver.exe')
-# url5 = r"http://192.168.0.102:8081"
-# test_basket(driver5,url5)

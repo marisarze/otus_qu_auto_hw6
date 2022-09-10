@@ -36,6 +36,11 @@ class MainPage(BasePage):
     PLEASE_LOGIN = (By.XPATH, "//div[contains(text(), 'You must')]")
 
     SLIDE_ACTIVE_ELEMENT = (By.CSS_SELECTOR, "div.swiper-slide-active")
+    CURRENCY_SWITCHER = (By.CSS_SELECTOR, "#form-currency > div > button")
+    CURRENCY_INDICATOR = (By.CSS_SELECTOR, "#form-currency > div > button > strong")
+    CURRENCY_EURO = (By.CSS_SELECTOR, "#form-currency > div > ul > li:nth-child(1)")
+    CURRENCY_POUND = (By.CSS_SELECTOR, "#form-currency > div > ul > li:nth-child(2)")
+    CURRENCY_DOLLAR = (By.CSS_SELECTOR, "#form-currency > div > ul > li:nth-child(3)")
 
 
     def slide_image_next(self):
