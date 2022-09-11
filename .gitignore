@@ -53,6 +53,7 @@ coverage.xml
 tests/pytest_cache
 tests/.pytest_cache
 tests/*.png
+tests/super_secret.json
 # Translations
 *.mo
 *.pot

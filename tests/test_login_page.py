@@ -1,40 +1,25 @@
-import pytest
-from conftest import driver, url
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
-from exception_wrappers import *
+import time
+import selenium
+from PageObjects.MainPage import MainPage
+from PageObjects.LoginPage import LoginPage
 
 
-
-def test_login_button(driver, url):
+def test_login_button_in_main_page(driver, url):
     driver.get(url=url)
-    dropdown_register_login = driver.find_element(by=By.CSS_SELECTOR, value='#top-links > ul > li.dropdown')
-    dropdown_register_login.click()
-    login_ref = driver.find_element(by=By.CSS_SELECTOR, value='#top-links > ul > li.dropdown.open > ul > li:nth-child(2)')
-    login_ref.click()
-
-    left_part_head = wait((By.CSS_SELECTOR, '#content > div > div:nth-child(1) > div > h2'), driver)
-    assert left_part_head.text == 'New Customer'
+    MainPage(driver).click_login()
+    assert driver.current_url == (url+"/index.php?route=account/login")
+    
 
 
-def test_login_fields(driver, url):
+def test_login_page(driver, url):
     driver.get(url=url+'/index.php?route=account/login')
-
-    right_part_head = wait((By.CSS_SELECTOR, '#content > div > div:nth-child(2) > div > h2'), driver)
+    left_part_head = LoginPage(driver).element(LoginPage.NEW_CUSTOMER_HEAD)
+    assert left_part_head.text == 'New Customer'
+    right_part_head = LoginPage(driver).element(LoginPage.RETURNING_CUSTOMER_HEAD)
     assert right_part_head.text == 'Returning Customer'
 
-    email_input = driver.find_element(by=By.CSS_SELECTOR, value='#input-email')
-    email_input.send_keys("richbird@mail.com")
+    LoginPage(driver).login(email="arichbird@mail.com", password="quackquack")
+    alert = LoginPage(driver).element(LoginPage.UNSUCCESS_LOGIN)
+    assert alert.text == 'Warning: No match for E-Mail Address and/or Password.' \
+        or alert.text == 'Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour.'
 
-    password_input = driver.find_element(by=By.CSS_SELECTOR, value='#input-password')
-    password_input.send_keys("quackquack")
-
-    login_confirm_button = driver.find_element(by=By.CSS_SELECTOR, value='#content > div > div:nth-child(2) > div > form > input')
-    login_confirm_button.click()
-
-    try:
-        WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="content"]/h2[contains(text(), "My Affiliate Account")]')))
-    except TimeoutException:
-        warning = wait((By.CSS_SELECTOR, '#account-login > div.alert.alert-danger.alert-dismissible'), driver)
-        assert warning.text == 'Warning: No match for E-Mail Address and/or Password.'
